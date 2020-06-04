@@ -11,19 +11,31 @@ const Header = (props) => {
   const [avatar, setAvatar] = useState({
     avatar: "",
   });
-  const [avatarId, setAvatarId] = useState({});
+  const [avatarId, setAvatarId] = useState({
+    avatarId: "",
+  });
   const avatarHandler = (e) => {
     setAvatar(e.target.files[0]);
   };
   const formHandler = (e, name) => {
     const formData = { ...form };
+    formData["Id"] = avatarId;
     formData[name] = e.target.value.trim();
     setForm(formData);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onUpdateCustomer(form);
+    console.log("Data reve", form);
+    axios
+      .put("save", form)
+      .then(async (response) => {
+        alert("new Item inserted into db");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  console.log("avatarId updated", avatarId);
   const handleSubmitAvatar = (e) => {
     e.preventDefault();
     let data = {
@@ -114,6 +126,49 @@ const Header = (props) => {
                       onClick={handleSubmitAvatar}
                     >
                       Upload
+                    </button>
+
+                    <div className="form-group">
+                      <label>title:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter title"
+                        onChange={(event) => formHandler(event, "title")}
+                        value={form.title}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Mrp</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Enter title"
+                        onChange={(event) => formHandler(event, "mrp")}
+                        value={form.mrp}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>ratings:</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Enter title"
+                        onChange={(event) => formHandler(event, "ratings")}
+                        value={form.ratings}
+                        required
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={handleSubmit}
+                      data-dismiss="modal"
+                    >
+                      Create New
                     </button>
                   </form>
                 </div>
