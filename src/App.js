@@ -8,9 +8,14 @@ function App() {
     <div>
       <BrowserRouter>
         <Switch>
-          <Route path="/admin" render={(props) => <Container {...props} />} />
+          <Route
+            path="/admin"
+            exact
+            render={(props) => <Container {...props} />}
+          />
           <Route path="/" exact component={HomePage}></Route>
           <Route path="/admin/home" exact component={AdminPage}></Route>
+
           <Route path="*" render={(props) => <Redirect to="/" />} />
         </Switch>
       </BrowserRouter>

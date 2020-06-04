@@ -24,7 +24,7 @@ class Login extends Component {
       error: "",
     });
     axios
-      .post("login", this.state.form)
+      .post("admin/login", this.state.form)
       .then(async (response) => {
         this.props.history.replace("/admin/home");
       })
